@@ -43,7 +43,11 @@ class Home extends Component{
 
     render(){
         if(!this.props.logged) {
-            return  <Login check={this.checkLogin} />
+            return  (
+                <div>
+                    <Login check={this.checkLogin} />
+                </div>
+            );
         } else {
             return  <Notes />
         }

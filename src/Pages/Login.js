@@ -21,12 +21,12 @@ export default class Login extends Component {
                     placeholder="username"
                     value={this.state.username}
                     onChange={e => this.setState({username: e.target.value})}
-                />
+                /><br />
                 <input
                     type="password"
                     value={this.state.password}
                     onChange={e => this.setState({password: e.target.value})}
-                />
+                /><br />
                 <button onClick={() => this.handlerClick()}>Login</button>
             </div>
         );
