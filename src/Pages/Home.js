@@ -42,7 +42,7 @@ class Home extends Component{
     }
 
     render(){
-        if(!this.props.checkLogin) {
+        if(!this.props.logged) {
             return  <Login check={this.checkLogin} />
         } else {
             return  <Notes />
@@ -52,7 +52,7 @@ class Home extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        checkLogin: state.userIsLogged,
+        logged: state.userIsLogged,
     };
 };
 

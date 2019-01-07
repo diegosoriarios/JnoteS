@@ -9,6 +9,12 @@ const Users = () => <h2>Users</h2>;
 
 class App extends Component {
   render(){
+    let loginStatus;
+    if(this.props.logged){
+      loginStatus = <Link to="/" onClick={dispatch => {dispatch(userIsLogged(false))}}>Logout</Link>
+    }else{ 
+      loginStatus = <Link to="/">Login</Link>
+    }                                     
     return(
       <Router>
         <div>
@@ -24,7 +30,7 @@ class App extends Component {
                 <Link to="/users/">Users</Link>
               </li>
               <li>
-                <Link to="/" onClick={dispatch => {dispatch(userIsLogged(false))}}>Logout</Link>
+                {loginStatus}
               </li>
             </ul>
           </nav>
@@ -40,7 +46,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      isLogged: state.userIsLogged    
+      logged: state.userIsLogged    
   };
 };
 
