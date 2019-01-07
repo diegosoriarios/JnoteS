@@ -4,10 +4,16 @@ import axios from 'axios';
 
 export default class Notes extends Component{
     state = {
-        notas: []
+        notas: [],
+        create: false,
+        text: ''
     };
 
     componentDidMount = () => {
+        this.getNotes();
+    }
+
+    getNotes = () => {
         axios.get(`${string.URL}/login/${this.props.id}/notes`)
             .then(response => {
                 response.data.forEach((value) => {
@@ -35,11 +41,53 @@ export default class Notes extends Component{
         })
     }
 
+    handleNotes = () => {
+        this.setState({
+            create: true
+        })
+    }
+
+    saveNote = () => {
+        let date = new Date();
+        axios.post(`${string.URL}/login/${this.props.id}/notes`, {
+            texto: this.state.text,
+            createdAt: date,
+            loginId: this.props.id
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        this.setState({
+            create: false,
+            notas: []
+        }, () => {
+            this.getNotes();
+        })
+    }
+
     render(){
-        return(
-            <ul>
-                {this.renderNotas()}
-            </ul>
-        );
+        if(this.state.create){
+            return (
+                <div>
+                    <textarea
+                        value={this.state.text}
+                        onChange={e => this.setState({text: e.target.value})}
+                    >
+                        Digite alguma coisa
+                    </textarea>
+                    <button onClick={() => this.saveNote()}>Salvar</button>
+                </div>
+            )
+        }else{
+            return(
+                <ul>
+                    <span onClick={() => this.handleNotes()}>+</span>
+                    {this.renderNotas()}
+                </ul>
+            );
+        }
     }
 }
