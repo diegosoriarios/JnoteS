@@ -10,7 +10,8 @@ class Home extends Component{
     constructor(){
         super();
         this.state = {
-            user: []
+            user: [],
+            id: 0,
         }
 
         this.checkLogin = this.checkLogin.bind(this);
@@ -35,6 +36,9 @@ class Home extends Component{
         this.state.user.forEach((value) => {
             if(value.name === username){
                 if(value.password === password){
+                    this.setState({
+                        id: value.id
+                    })
                     return userIsLogged(false);
                 }
             }
@@ -49,7 +53,7 @@ class Home extends Component{
                 </div>
             );
         } else {
-            return  <Notes />
+            return  <Notes id={this.state.id} />
         }
     }
 }

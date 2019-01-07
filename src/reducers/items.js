@@ -6,3 +6,12 @@ export function userIsLogged(state = false, action) {
             return state;
     }
 }
+
+export function navIsOpen(state = false, action) {
+    switch(action.type){
+        case 'ITS_OPEN':
+            return action.isOpen;
+        default:
+            return state;
+    }
+}

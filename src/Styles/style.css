@@ -1,0 +1,35 @@
+@media only screen and (max-width: 600px) {
+    .login-box {
+        text-align: center;
+    }
+
+    .login-box input {
+        text-align: center;
+        outline: none;
+        margin-top: 2%;
+        border: none;
+        border-bottom: 1px solid black;
+    }
+
+    .login-box button {
+        margin-top: 10px;
+        border: 1px solid black;
+    }
+
+    .navigator {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background-color: black;
+    }
+
+    .navigator ul {
+        margin-top: 30vh;
+    }
+
+    .navigator a{
+        text-decoration: none;
+        color: white;
+    }
+}

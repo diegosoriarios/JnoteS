@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import Home from './Pages/Home';
 import { connect } from 'react-redux';
-import { userIsLogged } from './actions/items';
+import { userIsLogged, navIsOpen } from './actions/items';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SignUp from "./Pages/SignUp";
+import './Styles/style.css';
 
 const About = () => <h2>About</h2>;
 const Users = () => <h2>Users</h2>;
 
 class App extends Component {
+  showNav = () => {
+    this.props.isOpened(!this.props.opened);
+  }
+
   render(){
     let loginStatus;
     if(this.props.logged){
@@ -19,7 +24,7 @@ class App extends Component {
     return(
       <Router>
         <div>
-          <nav>
+          <nav className="navigator" style={{left: !this.props.opened ? '-50%' : '0'}}>
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -38,11 +43,11 @@ class App extends Component {
               </li>
             </ul>
           </nav>
-
           <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/users/" component={Users} />
           <Route path="/signup/" component={SignUp} />
+          <div style={{float: 'right'}} onClick={() => this.showNav()}>Xasfas</div>
         </div>
       </Router>
     );
@@ -51,13 +56,15 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      logged: state.userIsLogged    
+      logged: state.userIsLogged,
+      opened: state.navIsOpen
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      isLogged: (bool) => dispatch(userIsLogged(bool))
+      isLogged: (bool) => dispatch(userIsLogged(bool)),
+      isOpened: (bool) => dispatch(navIsOpen(bool))
   }
 }
 

@@ -4,3 +4,10 @@ export function userIsLogged(bool) {
         isLogged: bool
     }
 }
+
+export function navIsOpen(bool){
+    return {
+        type: 'ITS_OPEN',
+        isOpen: bool
+    }
+}

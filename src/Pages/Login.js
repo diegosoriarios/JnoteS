@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../Styles/style.css';
 
 export default class Login extends Component {
     constructor(props){
@@ -15,7 +16,7 @@ export default class Login extends Component {
 
     render(){
         return(
-            <div>
+            <div className="login-box">
                 <input
                     type="text"
                     placeholder="username"
@@ -24,6 +25,7 @@ export default class Login extends Component {
                 /><br />
                 <input
                     type="password"
+                    placeholder="password"
                     value={this.state.password}
                     onChange={e => this.setState({password: e.target.value})}
                 /><br />

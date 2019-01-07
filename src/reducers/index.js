@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import { userIsLogged } from './items';
+import { userIsLogged, navIsOpen } from './items';
 
 export default combineReducers({
     userIsLogged,
+    navIsOpen
 });
