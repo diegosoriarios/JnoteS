@@ -1,4 +1,8 @@
 @media only screen and (max-width: 600px) {
+    .App{
+        margin-top: 15%;
+    }
+
     .login-box {
         text-align: center;
     }
@@ -24,12 +28,53 @@
         background-color: black;
     }
 
-    .navigator ul {
-        margin-top: 30vh;
-    }
-
     .navigator a{
         text-decoration: none;
         color: white;
+    }
+
+    .navigator img{
+        width: 100%;
+    }
+    
+    .notes {
+        list-style: none;
+    }
+
+    .notes li {
+        border: 1px solid black;
+        width: 90%;
+        margin-top: 1%;
+    }
+
+    .header{
+        background-color: black;
+        height: 50px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: white;
+    }
+
+    .header .left{
+        float: left;
+        width: 25%;
+        font-size: 1.5em;
+        text-align: center;
+        line-height: 50px;
+    }
+
+    .header .right {
+        float: right;
+        width: 25%;
+        font-size: 1.5em;
+        text-align: center;
+        line-height: 50px;
+    }
+
+    .header h3{
+        position: absolute;
+        left: 46%;
     }
 }

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import string from '../String';
 import axios from 'axios';
+import '../Styles/style.css';
+import { connect } from 'react-redux';
+import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 
-export default class Notes extends Component{
+class Notes extends Component{
     state = {
         notas: [],
         create: false,
@@ -34,16 +37,9 @@ export default class Notes extends Component{
             return (
                 <li key={i}>
                     <p>{value.texto}</p>
-                    <p>{value.anexo}</p>
                     <p>{`${date[2]}/${date[1]}/${date[0]}`}</p>
                 </li>
             );
-        })
-    }
-
-    handleNotes = () => {
-        this.setState({
-            create: true
         })
     }
 
@@ -61,17 +57,17 @@ export default class Notes extends Component{
             console.log(error);
           });
         this.setState({
-            create: false,
             notas: []
         }, () => {
+            this.props.createNote(false)
             this.getNotes();
         })
     }
 
     render(){
-        if(this.state.create){
+        if(this.props.openEditor){
             return (
-                <div>
+                <div className="App">
                     <textarea
                         value={this.state.text}
                         onChange={e => this.setState({text: e.target.value})}
@@ -79,15 +75,33 @@ export default class Notes extends Component{
                         Digite alguma coisa
                     </textarea>
                     <button onClick={() => this.saveNote()}>Salvar</button>
+                    <button onClick={() => this.props.createNote(false)}>Cancelar</button>
                 </div>
             )
         }else{
             return(
-                <ul>
-                    <span onClick={() => this.handleNotes()}>+</span>
+                <ul className="notes App">
                     {this.renderNotas()}
                 </ul>
             );
         }
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        logged: state.userIsLogged,
+        opened: state.navIsOpen,
+        openEditor: state.createNote
+    };
+  };
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        isLogged: (bool) => dispatch(userIsLogged(bool)),
+        isOpened: (bool) => dispatch(navIsOpen(bool)),
+        createNote: (bool) => dispatch(createNote(bool))
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Notes);

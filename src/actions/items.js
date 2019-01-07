@@ -11,3 +11,10 @@ export function navIsOpen(bool){
         isOpen: bool
     }
 }
+
+export function createNote(bool){
+    return {
+        type: 'CREATE_NOTE',
+        create: bool
+    }
+}

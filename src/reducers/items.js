@@ -15,3 +15,12 @@ export function navIsOpen(state = false, action) {
             return state;
     }
 }
+
+export function createNote(state = false, action) {
+    switch(action.type){
+        case 'CREATE_NOTE':
+            return action.create
+        default:
+            return state;
+    }
+}
