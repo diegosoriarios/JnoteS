@@ -9,7 +9,9 @@ class Notes extends Component{
     state = {
         notas: [],
         create: false,
-        text: ''
+        text: 'Digite alguma coisa',
+        postId: '',
+        edit: false,
     };
 
     componentDidMount = () => {
@@ -35,7 +37,7 @@ class Notes extends Component{
             let date = value.createdAt.split('T');
             date = date[0].split('-')
             return (
-                <li key={i}>
+                <li key={i} onClick={() => this.editNote(value)}>
                     <p>{value.texto}</p>
                     <p>{`${date[2]}/${date[1]}/${date[0]}`}</p>
                 </li>
@@ -44,8 +46,45 @@ class Notes extends Component{
     }
 
     saveNote = () => {
-        let date = new Date();
-        axios.post(`${string.URL}/login/${this.props.id}/notes`, {
+        if(this.state.edit){
+            this.updateNote()
+        }else{
+            let date = new Date();
+            axios.post(`${string.URL}/login/${this.props.id}/notes`, {
+                texto: this.state.text,
+                createdAt: date,
+                loginId: this.props.id
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+            this.setState({
+                notas: []
+            }, () => {
+                this.props.createNote(false)
+                this.getNotes();
+            })
+        }
+    }
+
+    editNote = i => {
+        console.log(i)
+        this.setState({
+            text: i.texto,
+            postId: i.id,
+            edit: true
+        })
+        this.props.createNote(true);
+    }
+
+    updateNote = () => {
+        console.log(typeof this.props.id)
+        console.log(typeof this.state.postId)
+        let date = new Date()
+        axios.put(`${string.URL}/login/${this.props.id}/notes/${this.state.postId}`, {
             texto: this.state.text,
             createdAt: date,
             loginId: this.props.id
@@ -74,7 +113,7 @@ class Notes extends Component{
                         value={this.state.text}
                         onChange={e => this.setState({text: e.target.value})}
                     >
-                        Digite alguma coisa
+                        {this.state.text}
                     </textarea>
                 </div>
             )
