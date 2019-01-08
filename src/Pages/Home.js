@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userIsLogged } from '../actions/items';
+import { userIsLogged, signUpUser } from '../actions/items';
 import axios from 'axios';
 import string from '../String';
 import Login from './Login';
 import Notes from './Notes';
+import SignUp from './SignUp';
 
 class Home extends Component{
     constructor(){
@@ -47,11 +48,19 @@ class Home extends Component{
 
     render(){
         if(!this.props.logged) {
-            return  (
-                <div className="App">
-                    <Login check={this.checkLogin} />
-                </div>
-            );
+            if(this.props.sign){
+                return (
+                    <div className="App">
+                        <SignUp />
+                    </div>
+                );
+            }else{
+                return  (
+                    <div className="App">
+                        <Login check={this.checkLogin} />
+                    </div>
+                );
+            }
         } else {
             return  <Notes id={this.state.id} />
         }
@@ -61,12 +70,14 @@ class Home extends Component{
 const mapStateToProps = (state) => {
     return {
         logged: state.userIsLogged,
+        sign: state.signUpUser
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        isLogged: (bool) => dispatch(userIsLogged(bool))
+        isLogged: (bool) => dispatch(userIsLogged(bool)),
+        signUp: (bool) => dispatch(signUpUser(bool))
     };
 };
 

@@ -24,3 +24,12 @@ export function createNote(state = false, action) {
             return state;
     }
 }
+
+export function signUpUser(state = false, action){
+    switch(action.type){
+        case 'SIGN_UP':
+            return action.signUp
+        default:
+            return state;
+    }
+}

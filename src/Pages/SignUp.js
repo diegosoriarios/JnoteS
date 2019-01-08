@@ -46,6 +46,7 @@ class SignUp extends Component {
     render(){
         return (
             <div className="login-box App">
+                <h2>Sign Up</h2>
                 <input
                     type="text"
                     placeholder="username"

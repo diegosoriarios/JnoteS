@@ -18,3 +18,10 @@ export function createNote(bool){
         create: bool
     }
 }
+
+export function signUpUser(bool){
+    return {
+        type: 'SIGN_UP',
+        signUp: bool
+    }
+}
