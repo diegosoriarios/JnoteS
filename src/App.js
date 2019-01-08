@@ -59,10 +59,14 @@ class App extends Component {
               <li className={location === '/users/' ? 'selected' : ''}>
                 <Link to="/users/" onClick={() => this.props.isOpened(!this.props.opened)}>Users</Link>
               </li>
-              <li className={location === '/' && !this.props.logged ? 'selected' : ''}>
+              <li className={location === '/' && !this.props.logged && !this.props.sign ? 'selected' : ''}>
                 {loginStatus}
               </li>
-              <li style={{display: !this.props.logged ? 'block' : 'none'}}>
+              <li 
+                style={{display: !this.props.logged ? 'block' : 'none'}} 
+                className={location === '/' && this.props.sign ? 'selected' : ''}
+
+              >
                 <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(true)}}>Sign Up</Link>
               </li>
             </ul>
