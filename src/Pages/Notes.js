@@ -71,7 +71,6 @@ class Notes extends Component{
     }
 
     editNote = i => {
-        console.log(i)
         this.setState({
             text: i.texto,
             postId: i.id,
@@ -81,8 +80,6 @@ class Notes extends Component{
     }
 
     updateNote = () => {
-        console.log(typeof this.props.id)
-        console.log(typeof this.state.postId)
         let date = new Date()
         axios.put(`${string.URL}/login/${this.props.id}/notes/${this.state.postId}`, {
             texto: this.state.text,
