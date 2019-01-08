@@ -33,14 +33,13 @@ class Home extends Component{
     }
 
     checkLogin = (username, password) => {
-        console.log(this.props.isLogged(true))
         this.state.user.forEach((value) => {
             if(value.name === username){
                 if(value.password === password){
                     this.setState({
                         id: value.id
                     })
-                    return userIsLogged(false);
+                    this.props.isLogged(true);
                 }
             }
         })

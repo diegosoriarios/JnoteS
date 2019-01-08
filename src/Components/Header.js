@@ -22,7 +22,7 @@ class Header extends Component {
                     style={{display: this.props.logged ? 'block' : 'none'}}
                     onClick={() => this.handleNotes()}
                 >
-                    <FontAwesomeIcon icon={!this.props.opened ? "sticky-note" : "save"} />
+                    <FontAwesomeIcon icon={!this.props.openEditor ? "sticky-note" : "save"} />
                 </div>
             </div>
         );
