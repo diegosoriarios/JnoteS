@@ -7,6 +7,7 @@ import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { CSSTransition, transit } from 'react-css-transition'
 
 library.add(faSave)
 
@@ -110,9 +111,17 @@ class Notes extends Component{
         if(this.props.openEditor){
             return (
                 <div className="App">
-                    <div className="saveNote" onClick={() => this.saveNote()}>
+                    <CSSTransition
+                        defaultStyle={{ transform: "translate(0, 0)" }}
+                        enterStyle={{ transform: transit("translate(1000%, 0)", 500, "ease-in-out") }}
+                        leaveStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+                        activeStyle={{ transform: "translate(1000%, 0)" }}
+                        active={this.props.opened}
+                        className="saveNote" 
+                        onClick={() => this.saveNote()}
+                    >
                         <FontAwesomeIcon icon="save" />
-                    </div>
+                    </CSSTransition>
                     <textarea
                         value={this.state.text}
                         onChange={e => this.setState({text: e.target.value})}
