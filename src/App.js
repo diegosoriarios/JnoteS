@@ -22,11 +22,19 @@ class App extends Component {
   }
 
   render(){
+    let location = window.location.pathname;
     let loginStatus;
     if(this.props.logged){
-      loginStatus = <Link to="/" onClick={dispatch => this.loginStatusClick(dispatch)}>Logout</Link>
+      loginStatus = 
+        <Link 
+          to="/" 
+          onClick={dispatch => this.loginStatusClick(dispatch)}
+        >
+          Logout
+        </Link>
     }else{ 
-      loginStatus = <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Login</Link>
+      loginStatus = 
+        <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Login</Link>
     }                                     
     return(
       <Router>
@@ -42,16 +50,16 @@ class App extends Component {
           <nav>
           <img src='https://images.freeimages.com/images/large-previews/63d/typo-8-1468401.jpg' alt='type' />
             <ul>
-              <li>
+              <li className={location === '/' && this.props.logged ? 'selected' : ''} >
                 <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>
               </li>
-              <li>
+              <li className={location === '/about/' ? 'selected' : ''} >
                 <Link to="/about/" onClick={() => this.props.isOpened(!this.props.opened)}>About</Link>
               </li>
-              <li>
+              <li className={location === '/users/' ? 'selected' : ''}>
                 <Link to="/users/" onClick={() => this.props.isOpened(!this.props.opened)}>Users</Link>
               </li>
-              <li>
+              <li className={location === '/' && !this.props.logged ? 'selected' : ''}>
                 {loginStatus}
               </li>
               <li style={{display: !this.props.logged ? 'block' : 'none'}}>
