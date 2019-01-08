@@ -22,6 +22,7 @@
 
     .navigator {
         position: absolute;
+        margin-left: -8px;
         top: 0;
         width: 50%;
         height: 100%;
@@ -93,5 +94,9 @@
     .cancelBtn {
         width: 50%;
         border: 1px solid black;
+    }
+
+    .transition {
+        
     }
 }

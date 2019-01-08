@@ -5,6 +5,7 @@ import { userIsLogged, navIsOpen, signUpUser } from './actions/items';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './Styles/style.css';
 import Header from "./Components/Header";
+import { CSSTransition, transit } from 'react-css-transition'
 
 const About = () => <h2>About</h2>;
 const Users = () => <h2>Users</h2>;
@@ -28,7 +29,15 @@ class App extends Component {
     return(
       <Router>
         <div>
-          <nav className="navigator" style={{left: !this.props.opened ? '-50%' : '0'}}>
+        <CSSTransition
+          defaultStyle={{ transform: "translate(-101%, 0)" }}
+          enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+          leaveStyle={{ transform: transit("translate(-101%, 0)", 500, "ease-in-out") }}
+          activeStyle={{ transform: "translate(0, 0)" }}
+          active={this.props.opened}
+          className="navigator" style={{width: '50%'}}
+        >
+          <nav>
           <img src='https://images.freeimages.com/images/large-previews/63d/typo-8-1468401.jpg' alt='type' />
             <ul>
               <li>
@@ -48,6 +57,7 @@ class App extends Component {
               </li>
             </ul>
           </nav>
+        </CSSTransition>
           <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/users/" component={Users} />

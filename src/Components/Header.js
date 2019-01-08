@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStickyNote, faBars, faSave } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
+import { CSSTransition, transit } from 'react-css-transition'
 
 library.add(faStickyNote, faBars, faSave)
 
@@ -14,17 +15,26 @@ class Header extends Component {
 
     render(){
         return(
-            <div className="header" style={{left: !this.props.opened ? '0' : '50%'}}>
-                <div className="left" onClick={() => this.props.isOpened(!this.props.opened)}><FontAwesomeIcon icon="bars" /></div>
-                <h3>Notes</h3>
-                <div 
-                    className="right" 
-                    style={{display: this.props.logged ? 'block' : 'none'}}
-                    onClick={() => this.handleNotes()}
-                >
-                    <FontAwesomeIcon icon={!this.props.openEditor ? "sticky-note" : "save"} />
+            <CSSTransition
+                defaultStyle={{ transform: "translate(0, 0)" }}
+                enterStyle={{ transform: transit("translate(50%, 0)", 500, "ease-in-out") }}
+                leaveStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+                activeStyle={{ transform: "translate(50%, 0)" }}
+                active={this.props.opened}
+                className="header"
+            >
+                <div>
+                    <div className="left" onClick={() => this.props.isOpened(!this.props.opened)}><FontAwesomeIcon icon="bars" /></div>
+                    <h3>Notes</h3>
+                    <div 
+                        className="right" 
+                        style={{display: this.props.logged ? 'block' : 'none'}}
+                        onClick={() => this.handleNotes()}
+                    >
+                        <FontAwesomeIcon icon={!this.props.openEditor ? "sticky-note" : "save"} />
+                    </div>
                 </div>
-            </div>
+            </CSSTransition>
         );
     }
 }
