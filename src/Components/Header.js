@@ -8,6 +8,10 @@ import { CSSTransition, transit } from 'react-css-transition'
 
 library.add(faStickyNote, faBars, faSave)
 
+CSSTransition.childContextTypes = {
+    // this can be empty
+}
+
 class Header extends Component {
     handleNotes = () => {
         this.props.createNote(true);
