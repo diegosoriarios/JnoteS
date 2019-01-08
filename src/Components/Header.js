@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStickyNote, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faStickyNote, faBars, faSave } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 
-library.add(faStickyNote, faBars)
+library.add(faStickyNote, faBars, faSave)
 
 class Header extends Component {
     handleNotes = () => {
@@ -22,7 +22,7 @@ class Header extends Component {
                     style={{display: this.props.logged ? 'block' : 'none'}}
                     onClick={() => this.handleNotes()}
                 >
-                    <FontAwesomeIcon icon="sticky-note" />
+                    <FontAwesomeIcon icon={!this.props.opened ? "sticky-note" : "save"} />
                 </div>
             </div>
         );
