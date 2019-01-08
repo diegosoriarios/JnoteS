@@ -121,12 +121,13 @@
     }
     
     textarea {
-        width: 99%;
-        height: 90vh;
+        width: 96%;
+        height: 88vh;
         border: 1px solid #1B2021;
         outline: none;
         margin-top: 1%;
         background-color: #E3DCC2;
+        padding: 2%
     }
 
     .saveBtn {
