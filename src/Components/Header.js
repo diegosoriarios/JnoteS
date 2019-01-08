@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStickyNote, faBars, faSave } from '@fortawesome/free-solid-svg-icons'
+import { faStickyNote, faBars, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 import { CSSTransition, transit } from 'react-css-transition'
 
-library.add(faStickyNote, faBars, faSave)
+library.add(faStickyNote, faBars, faSave, faTimes)
 
 CSSTransition.childContextTypes = {
     // this can be empty
@@ -28,7 +28,9 @@ class Header extends Component {
                 className="header"
             >
                 <div>
-                    <div className="left" onClick={() => this.props.isOpened(!this.props.opened)}><FontAwesomeIcon icon="bars" /></div>
+                    <div className="left" onClick={() => this.props.isOpened(!this.props.opened)}>
+                        <FontAwesomeIcon icon={!this.props.opened ? "bars" : "times"} />
+                    </div>
                     <h3>Notes</h3>
                     <div 
                         className="right" 

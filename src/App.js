@@ -15,14 +15,16 @@ class App extends Component {
     this.props.isOpened(!this.props.opened);
   }
 
-  loginStatusClick = () => {
+  loginStatusClick = (dispatch) => {
+    localStorage.removeItem('logged');
     this.props.isOpened(!this.props.opened)
+    dispatch(userIsLogged(false));
   }
 
   render(){
     let loginStatus;
     if(this.props.logged){
-      loginStatus = <Link to="/" onClick={dispatch => {dispatch(userIsLogged(false)); this.loginStatusClick()}}>Logout</Link>
+      loginStatus = <Link to="/" onClick={dispatch => this.loginStatusClick(dispatch)}>Logout</Link>
     }else{ 
       loginStatus = <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Login</Link>
     }                                     

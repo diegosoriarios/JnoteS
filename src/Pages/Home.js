@@ -14,7 +14,6 @@ class Home extends Component{
             user: [],
             id: 0,
         }
-
         this.checkLogin = this.checkLogin.bind(this);
     }
     
@@ -30,6 +29,12 @@ class Home extends Component{
             .catch(function (error) {
                 console.log(error);
             })
+        if(localStorage.getItem('logged') !== null){
+            this.props.isLogged(true);
+            this.setState({
+                id: JSON.parse(localStorage.getItem('logged'))
+            })
+        }
     }
 
     checkLogin = (username, password) => {
@@ -40,6 +45,7 @@ class Home extends Component{
                         id: value.id
                     })
                     this.props.isLogged(true);
+                    localStorage.setItem('logged', JSON.stringify(value.id))
                 }
             }
         })

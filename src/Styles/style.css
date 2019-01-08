@@ -93,6 +93,8 @@
     .header h3{
         position: absolute;
         left: 46%;
+        margin: 0;
+        line-height: 50px;
     }
     
     textarea {
