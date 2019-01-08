@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
 
 @media only screen and (max-width: 600px) {
-    * {
+    body {
         font-family: 'EB Garamond', serif;
+        background-color: #E3DCC2;
     }
 
     .App{
@@ -18,12 +19,20 @@
         outline: none;
         margin-top: 2%;
         border: none;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid #1B2021;
     }
 
     .login-box button {
         margin-top: 10px;
-        border: 1px solid black;
+        border: 1px solid #1B2021;
+    }
+
+    nav {
+        background-color: #51513D;
+    }
+
+    svg {
+        background-color: #51513D;
     }
 
     .navigator {
@@ -32,20 +41,30 @@
         top: 0;
         width: 50%;
         height: 100%;
-        background-color: black;
+        background-color: #51513D;
     }
 
     .navigator a{
         text-decoration: none;
         color: white;
+        background-color: #51513D;
     }
 
     .navigator img{
         width: 100%;
+        background-color: #51513D;
     }
 
     .navigator ul {
         padding: 0;
+    }
+
+    .selected {
+        background-color: #A6A867;
+    }
+
+    .selected a {
+        background-color: #A6A867;
     }
 
     .navigator li {
@@ -59,14 +78,14 @@
     }
 
     .notes li {
-        border: 1px solid black;
+        border: 1px solid #1B2021;
         width: 90%;
         margin-top: 1%;
         padding-left: 2%;
     }
 
     .header{
-        background-color: black;
+        background-color: #51513D;
         height: 50px;
         width: 100%;
         position: absolute;
@@ -76,6 +95,7 @@
     }
 
     .header .left{
+        background-color: #51513D;
         float: left;
         width: 25%;
         font-size: 1.5em;
@@ -84,6 +104,7 @@
     }
 
     .header .right {
+        background-color: #51513D;
         float: right;
         width: 25%;
         font-size: 1.5em;
@@ -96,37 +117,36 @@
         left: 46%;
         margin: 0;
         line-height: 50px;
+        background-color: #51513D;
     }
     
     textarea {
         width: 99%;
         height: 90vh;
-        border: 1px solid black;
+        border: 1px solid #1B2021;
         outline: none;
         margin-top: 1%;
+        background-color: #E3DCC2;
     }
 
     .saveBtn {
         width: 50%;
-        border: 1px solid black;
+        border: 1px solid #1B2021;
     }
 
     .cancelBtn {
         width: 50%;
-        border: 1px solid black;
+        border: 1px solid #1B2021;
     }
     
     .saveNote {
         position: absolute;
+        background-color: #51513D;
         top: 0;
         color: white;
         line-height: 50px;
         z-index: 1;
         font-size: 1.5em;
         right: 22%;
-    }
-
-    .selected {
-        background-color: grey;
     }
 }
