@@ -68,14 +68,14 @@ class Notes extends Component{
         if(this.props.openEditor){
             return (
                 <div className="App">
+                    <button className="saveBtn" onClick={() => this.saveNote()}>Salvar</button>
+                    <button className="cancelBtn" onClick={() => this.props.createNote(false)}>Cancelar</button>
                     <textarea
                         value={this.state.text}
                         onChange={e => this.setState({text: e.target.value})}
                     >
                         Digite alguma coisa
                     </textarea>
-                    <button className="saveBtn" onClick={() => this.saveNote()}>Salvar</button>
-                    <button className="cancelBtn" onClick={() => this.props.createNote(false)}>Cancelar</button>
                 </div>
             )
         }else{
