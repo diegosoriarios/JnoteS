@@ -74,8 +74,8 @@ class Notes extends Component{
                     >
                         Digite alguma coisa
                     </textarea>
-                    <button onClick={() => this.saveNote()}>Salvar</button>
-                    <button onClick={() => this.props.createNote(false)}>Cancelar</button>
+                    <button className="saveBtn" onClick={() => this.saveNote()}>Salvar</button>
+                    <button className="cancelBtn" onClick={() => this.props.createNote(false)}>Cancelar</button>
                 </div>
             )
         }else{
