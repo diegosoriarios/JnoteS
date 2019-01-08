@@ -4,12 +4,17 @@ import axios from 'axios';
 import '../Styles/style.css';
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSave)
 
 class Notes extends Component{
     state = {
         notas: [],
         create: false,
-        text: 'Digite alguma coisa',
+        text: '',
         postId: '',
         edit: false,
     };
@@ -62,7 +67,8 @@ class Notes extends Component{
                 console.log(error);
             });
             this.setState({
-                notas: []
+                notas: [],
+                text: ''
             }, () => {
                 this.props.createNote(false)
                 this.getNotes();
@@ -104,11 +110,13 @@ class Notes extends Component{
         if(this.props.openEditor){
             return (
                 <div className="App">
-                    <button className="saveBtn" onClick={() => this.saveNote()}>Salvar</button>
-                    <button className="cancelBtn" onClick={() => this.props.createNote(false)}>Cancelar</button>
+                    <div className="saveNote" onClick={() => this.saveNote()}>
+                        <FontAwesomeIcon icon="save" />
+                    </div>
                     <textarea
                         value={this.state.text}
                         onChange={e => this.setState({text: e.target.value})}
+                        placeholder="Digite alguma coisa"
                     >
                         {this.state.text}
                     </textarea>

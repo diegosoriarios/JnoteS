@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStickyNote, faBars, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faStickyNote, faBars, faSave, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 import { CSSTransition, transit } from 'react-css-transition'
 
-library.add(faStickyNote, faBars, faSave, faTimes)
+library.add(faStickyNote, faBars, faSave, faTimes, faTimesCircle)
 
 CSSTransition.childContextTypes = {
     // this can be empty
@@ -14,7 +14,11 @@ CSSTransition.childContextTypes = {
 
 class Header extends Component {
     handleNotes = () => {
-        this.props.createNote(true);
+        if(this.props.openEditor){
+            this.props.createNote(false);
+        }else{
+            this.props.createNote(true);
+        }
     }
 
     render(){
@@ -37,7 +41,7 @@ class Header extends Component {
                         style={{display: this.props.logged ? 'block' : 'none'}}
                         onClick={() => this.handleNotes()}
                     >
-                        <FontAwesomeIcon icon={!this.props.openEditor ? "sticky-note" : "save"} />
+                        <FontAwesomeIcon icon={!this.props.openEditor ? "sticky-note" : "times-circle"} />
                     </div>
                 </div>
             </CSSTransition>
