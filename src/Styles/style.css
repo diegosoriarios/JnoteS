@@ -151,4 +151,21 @@
         font-size: 1.5em;
         right: 22%;
     }
+
+    .modal {
+        height: 250px;
+        width: 80%;
+        margin: 50% auto;
+        text-align: center;
+        line-height: 100px;
+        background-color: #E3DCC2;
+    }
+
+    .modal button {
+        border: 1px solid #1B2021;
+        background-color: transparent;
+        margin: 5%;
+        width: 25%;
+        border-radius: 5px;
+    }
 }

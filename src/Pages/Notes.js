@@ -4,24 +4,30 @@ import axios from 'axios';
 import '../Styles/style.css';
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { CSSTransition, transit } from 'react-css-transition'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { CSSTransition, transit } from 'react-css-transition';
+import Modal from 'react-modal';
 
-library.add(faSave)
+library.add(faSave, faTrash)
 
 class Notes extends Component{
-    state = {
-        notas: [],
-        create: false,
-        text: '',
-        postId: '',
-        edit: false,
-    };
+    constructor(){
+        super()
+        this.state = {
+            notas: [],
+            create: false,
+            text: '',
+            postId: '',
+            edit: false,
+            modal: false
+        };
+    }
 
     componentDidMount = () => {
         this.getNotes();
+        Modal.setAppElement('#root')
     }
 
     getNotes = () => {
@@ -43,9 +49,12 @@ class Notes extends Component{
             let date = value.createdAt.split('T');
             date = date[0].split('-')
             return (
-                <li key={i} onClick={() => this.editNote(value)}>
-                    <p>{value.texto}</p>
-                    <p>{`${date[2]}/${date[1]}/${date[0]}`}</p>
+                <li key={i}>
+                    <div onClick={() => this.editNote(value)}>
+                        <p>{value.texto}</p>
+                        <p>{`${date[2]}/${date[1]}/${date[0]}`}</p>
+                    </div>
+                    <button onClick={() => this.handleModal(value)}><FontAwesomeIcon icon="trash" /></button>
                 </li>
             );
         })
@@ -107,6 +116,30 @@ class Notes extends Component{
         })
     }
 
+    handleModal = (i = '') => {
+        this.setState({
+            modal: true,
+            postId: i.id
+        })
+    }
+
+    deleteNote = () => {
+        axios.delete(`${string.URL}/login/${this.props.id}/notes/${this.state.postId}`)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        this.setState({
+            notas: [],
+            modal: false,
+        }, () => {
+            this.props.createNote(false)
+            this.getNotes();
+        })
+    }
+
     render(){
         if(this.props.openEditor){
             return (
@@ -133,9 +166,21 @@ class Notes extends Component{
             )
         }else{
             return(
-                <ul className="notes App">
-                    {this.renderNotas()}
-                </ul>
+                <div>
+                    <Modal
+                        isOpen={this.state.modal}
+                        onRequestClose={this.closeModal}
+                        contentLabel="Example Modal"
+                        className="modal"
+                    >
+                        <p>Deletar?</p>
+                        <button onClick={() => this.deleteNote()}>Sim</button>
+                        <button onClick={() => this.setState({modal: false})}>Não</button>
+                    </Modal>
+                    <ul className="notes App">
+                        {this.renderNotas()}
+                    </ul>
+                </div>
             );
         }
     }
