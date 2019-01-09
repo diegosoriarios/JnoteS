@@ -1,5 +1,191 @@
 @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
 
+body {
+    font-family: 'EB Garamond', serif;
+    background-color: #E3DCC2;
+}
+
+.App{
+    margin-top: 15%;
+}
+
+.login-box {
+    text-align: center;
+}
+
+.login-box input {
+    text-align: center;
+    outline: none;
+    margin-top: 2%;
+    border: none;
+    border-bottom: 1px solid #1B2021;
+    background-color: transparent;
+}
+
+.login-box button {
+    margin-top: 10px;
+    border: 1px solid #1B2021;
+}
+
+nav {
+    background-color: #51513D;
+}
+
+svg {
+    background-color: #51513D;
+}
+
+.navigator {
+    position: absolute;
+    margin-left: -8px;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #51513D;
+}
+
+.navigator a{
+    text-decoration: none;
+    color: white;
+    background-color: #51513D;
+}
+
+.navigator img{
+    width: 100%;
+    background-color: #51513D;
+}
+
+.navigator ul {
+    padding: 0;
+}
+
+.selected {
+    background-color: #A6A867;
+}
+
+.selected a {
+    background-color: #A6A867;
+}
+
+.navigator li {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    text-align: center;
+}
+
+.notes {
+    list-style: none;
+}
+
+.notes li {
+    border: 1px solid #1B2021;
+    width: 88%;
+    margin-top: 1%;
+    padding-left: 2%;
+}
+
+.notes li div {
+    width: 80%;
+    margin: 0;
+    display: inline-flex;
+}
+
+.notes li .delete {
+    float: right;
+    padding: 5%;
+    font-size: 1em;
+}
+
+.notes li .delete svg {
+    background-color: transparent;
+}
+
+.header{
+    background-color: #51513D;
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+}
+
+.header .left{
+    background-color: #51513D;
+    float: left;
+    width: 25%;
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 50px;
+}
+
+.header .right {
+    background-color: #51513D;
+    float: right;
+    width: 25%;
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 50px;
+}
+
+.header h3{
+    position: absolute;
+    left: 46%;
+    margin: 0;
+    line-height: 50px;
+    background-color: #51513D;
+}
+
+textarea {
+    width: 96%;
+    height: 88vh;
+    border: 1px solid #1B2021;
+    outline: none;
+    margin-top: 1%;
+    background-color: #E3DCC2;
+    padding: 2%
+}
+
+.saveBtn {
+    width: 50%;
+    border: 1px solid #1B2021;
+}
+
+.cancelBtn {
+    width: 50%;
+    border: 1px solid #1B2021;
+}
+
+.saveNote {
+    position: absolute;
+    background-color: #51513D;
+    top: 0;
+    color: white;
+    line-height: 50px;
+    z-index: 1;
+    font-size: 1.5em;
+    right: 22%;
+}
+
+.modal {
+    height: 250px;
+    width: 80%;
+    margin: 50% auto;
+    text-align: center;
+    line-height: 100px;
+    background-color: #E3DCC2;
+    outline: none;
+    border-radius: 10px;
+}
+
+.modal button {
+    border: 1px solid #1B2021;
+    background-color: transparent;
+    margin: 5%;
+    width: 25%;
+    border-radius: 5px;
+}
+
 @media only screen and (max-width: 600px) {
     body {
         font-family: 'EB Garamond', serif;
