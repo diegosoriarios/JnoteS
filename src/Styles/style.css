@@ -85,6 +85,22 @@
         padding-left: 2%;
     }
 
+    .notes li div {
+        width: 80%;
+        margin: 0;
+        display: inline-flex;
+    }
+
+    .notes li .delete {
+        float: right;
+        padding: 5%;
+        font-size: 1em;
+    }
+
+    .notes li .delete svg {
+        background-color: transparent;
+    }
+
     .header{
         background-color: #51513D;
         height: 50px;
@@ -159,6 +175,8 @@
         text-align: center;
         line-height: 100px;
         background-color: #E3DCC2;
+        outline: none;
+        border-radius: 10px;
     }
 
     .modal button {

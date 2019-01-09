@@ -54,7 +54,7 @@ class Notes extends Component{
                         <p>{value.texto}</p>
                         <p>{`${date[2]}/${date[1]}/${date[0]}`}</p>
                     </div>
-                    <button onClick={() => this.handleModal(value)}><FontAwesomeIcon icon="trash" /></button>
+                    <button onClick={() => this.handleModal(value)} className="delete"><FontAwesomeIcon icon="trash" /></button>
                 </li>
             );
         })
