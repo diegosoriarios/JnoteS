@@ -97,7 +97,7 @@ class Notes extends Component{
 
     updateNote = () => {
         let date = new Date()
-        axios.put(`${string.URL}/login/${this.props.id}/notes/${this.state.postId}`, {
+        axios.put(`${string.URL}/notes/${this.state.postId}`, {
             texto: this.state.text,
             createdAt: date,
             loginId: this.props.id
@@ -124,9 +124,10 @@ class Notes extends Component{
     }
 
     deleteNote = () => {
-        axios.delete(`${string.URL}/login/${this.props.id}/notes/${this.state.postId}`)
+        console.log(this.state.postId)
+        axios.delete(`${string.URL}/notes/${this.state.postId}`)
           .then(function (response) {
-            console.log(response);
+            console.log(response.data);
           })
           .catch(function (error) {
             console.log(error);
