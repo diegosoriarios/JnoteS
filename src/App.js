@@ -11,6 +11,11 @@ const About = () => <h2>About</h2>;
 const Users = () => <h2>Users</h2>;
 
 class App extends Component {
+
+  componentDidMount() {
+    document.body.style = "background: black"
+  }
+
   showNav = () => {
     this.props.isOpened(!this.props.opened);
   }
@@ -45,10 +50,13 @@ class App extends Component {
           leaveStyle={{ transform: transit("translate(-101%, 0)", 500, "ease-in-out") }}
           activeStyle={{ transform: "translate(0, 0)" }}
           active={this.props.opened}
-          className="navigator" style={{width: '50%'}}
+          className="navigator" style={{width: '80%'}}
         >
           <nav>
-          <img src='https://images.freeimages.com/images/large-previews/63d/typo-8-1468401.jpg' alt='type' />
+            <div className="nav-top">
+              <img src="https://api.adorable.io/avatars/400/abott@adorable.io.png" alt="avatar" className="avatar-img" />
+              <h2>{ /*{'nome'} || */"Diego"}</h2>
+            </div>
             <ul>
               <li className={location === '/' && this.props.logged ? 'selected' : ''} >
                 <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>

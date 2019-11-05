@@ -25,9 +25,9 @@ class Header extends Component {
         return(
             <CSSTransition
                 defaultStyle={{ transform: "translate(0, 0)" }}
-                enterStyle={{ transform: transit("translate(50%, 0)", 500, "ease-in-out") }}
+                enterStyle={{ transform: transit("translate(78%, 0)", 500, "ease-in-out") }}
                 leaveStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
-                activeStyle={{ transform: "translate(50%, 0)" }}
+                activeStyle={{ transform: "translate(78%, 0)" }}
                 active={this.props.opened}
                 className="header"
             >

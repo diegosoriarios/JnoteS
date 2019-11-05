@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import string from '../String';
 import axios from 'axios';
+import '../Styles/Notes.css'
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 import Modal from 'react-modal';
@@ -20,7 +21,7 @@ class Notes extends Component{
             postId: '',
             edit: false,
             modal: false,
-            title: '',
+            title: 'Title',
             color: '#ffffff',
             createdAt: ''
         };
@@ -50,7 +51,7 @@ class Notes extends Component{
             let date = value.createdAt.split('T');
             date = date[0].split('-')
             return (
-                <div key={i} style={{zIndex: 1}}>
+                <div className="note-card" key={i} style={{zIndex: 1}}>
                     <div className="toast-header">
                         <input type="color" />
                         <div className="mr-auto">
@@ -158,7 +159,7 @@ class Notes extends Component{
         const newDate = new Date()
         if(this.props.openEditor){
             return (
-                <div className="App">
+                <div className="notes App">
                 <CSSTransition
                     defaultStyle={{ transform: "translate(-101%, 0)" }}
                     enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
@@ -167,7 +168,7 @@ class Notes extends Component{
                     active={this.props.opened}
                     className="navigator" style={{width: '50%'}}
                 >
-                    <div>
+                    <div className="note-card">
                         <div className="toast-header">
                             <input type="color" />
                             <div className="mr-auto" contentEditable="true" 
@@ -209,9 +210,25 @@ class Notes extends Component{
                         <button onClick={() => this.deleteNote()}>Sim</button>
                         <button onClick={() => this.setState({modal: false})}>Não</button>
                     </Modal>
-                    <div className="notes App">
-                        {this.renderNotas()}
-                    </div>
+                    <CSSTransition
+                        defaultStyle={{ transform: "scale(.7)"}}
+                        enterStyle={{ transform: transit("scale(1)", 200, "ease-in-out") }}
+                        leaveStyle={{ transform: transit("scale(0.7)", 500, "ease-in-out")}}
+                        activeStyle={{ transform: "scale(1)"}}
+                        active={!this.props.opened}
+                    >
+                        <CSSTransition
+                        defaultStyle={{ transform: "translate(80%, 0)"}}
+                        enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+                        leaveStyle={{ transform: transit("translate(80%, 0)", 500, "ease-in-out")}}
+                        activeStyle={{ transform: "translate(0, 0)"}}
+                        active={!this.props.opened}
+                    >   
+                            <div className="notes App">
+                                {this.renderNotas()}
+                            </div>
+                        </CSSTransition>
+                    </CSSTransition>
                 </div>
             );
         }

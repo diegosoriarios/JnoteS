@@ -1,0 +1,13 @@
+.note-card {
+    border: 1px solid black;
+    margin: 1px;
+}
+
+.editor {
+    margin-top: 50%;
+}
+
+.notes {
+    background-color: white;
+    height: 100vh;
+}
