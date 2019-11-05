@@ -8,6 +8,11 @@ Partes do projeto:
 * Animações com [CSS-Transition](https://reactcommunity.org/react-transition-group/css-transition)
 * Modal com [React-Modal](https://github.com/reactjs/react-modal)
 
+### TODO
+- [] Adicionar Todo
+- [] Arrumar UI
+- [] Fazer back
+
 ### JSON-SERVER
 Abrir em outra porta
 ```

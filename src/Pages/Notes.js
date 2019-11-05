@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import string from '../String';
 import axios from 'axios';
-import '../Styles/style.css';
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { CSSTransition, transit } from 'react-css-transition';
 import Modal from 'react-modal';
+import { CSSTransition, transit } from 'react-css-transition'
 
-library.add(faSave, faTrash)
+CSSTransition.childContextTypes = {
+    // this can be empty
+}
 
 class Notes extends Component{
     constructor(){
@@ -21,7 +19,10 @@ class Notes extends Component{
             text: '',
             postId: '',
             edit: false,
-            modal: false
+            modal: false,
+            title: '',
+            color: '#ffffff',
+            createdAt: ''
         };
     }
 
@@ -49,13 +50,24 @@ class Notes extends Component{
             let date = value.createdAt.split('T');
             date = date[0].split('-')
             return (
-                <li key={i}>
-                    <div onClick={() => this.editNote(value)}>
-                        <p>{value.texto}</p>
-                        <p>{`${date[2]}/${date[1]}/${date[0]}`}</p>
+                <div key={i} style={{zIndex: 1}}>
+                    <div className="toast-header">
+                        <input type="color" />
+                        <div className="mr-auto">
+                                {value.title}
+                        </div>
+                        <small>{date}</small>
+                        <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.editNote(value)}>
+                            <span aria-hidden="true">✎</span>
+                        </button>
+                        <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.handleModal(value)}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <button onClick={() => this.handleModal(value)} className="delete"><FontAwesomeIcon icon="trash" /></button>
-                </li>
+                    <div className="toast-body">
+                        {value.texto}
+                    </div>
+                </div>
             );
         })
     }
@@ -142,28 +154,47 @@ class Notes extends Component{
     }
 
     render(){
+        const { title, text } = this.state
+        const newDate = new Date()
         if(this.props.openEditor){
             return (
                 <div className="App">
-                    <CSSTransition
-                        defaultStyle={{ transform: "translate(0, 0)" }}
-                        enterStyle={{ transform: transit("translate(1000%, 0)", 500, "ease-in-out") }}
-                        leaveStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
-                        activeStyle={{ transform: "translate(1000%, 0)" }}
-                        active={this.props.opened}
-                        className="saveNote" 
-                        onClick={() => this.saveNote()}
-                    >
-                        <FontAwesomeIcon icon="save" />
-                    </CSSTransition>
-                    <textarea
-                        value={this.state.text}
-                        onChange={e => this.setState({text: e.target.value})}
-                        placeholder="Digite alguma coisa"
-                    >
-                        {this.state.text}
-                    </textarea>
+                <CSSTransition
+                    defaultStyle={{ transform: "translate(-101%, 0)" }}
+                    enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+                    leaveStyle={{ transform: transit("translate(-101%, 0)", 500, "ease-in-out") }}
+                    activeStyle={{ transform: "translate(0, 0)" }}
+                    active={this.props.opened}
+                    className="navigator" style={{width: '50%'}}
+                >
+                    <div>
+                        <div className="toast-header">
+                            <input type="color" />
+                            <div className="mr-auto" contentEditable="true" 
+                                suppressContentEditableWarning={true}
+                                value={title}
+                                onInput={e => this.setState({title: e.target.value})}>
+                                {title}
+                            </div>
+                            <small>{newDate.getDate()} - {newDate.getMonth()} - {newDate.getFullYear()}</small>
+                            <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.editNote('ok')}>
+                                <span aria-hidden="true">✎</span>
+                            </button>
+                            <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.handleModal('ok')}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="toast-body" 
+                            contentEditable="true" 
+                            suppressContentEditableWarning={true}
+                            value={text}
+                            onInput={e => this.setState({text: e.target.value})}
+                            >
+                            {text}
+                        </div>
                 </div>
+                </CSSTransition>
+            </div>
             )
         }else{
             return(
@@ -178,9 +209,9 @@ class Notes extends Component{
                         <button onClick={() => this.deleteNote()}>Sim</button>
                         <button onClick={() => this.setState({modal: false})}>Não</button>
                     </Modal>
-                    <ul className="notes App">
+                    <div className="notes App">
                         {this.renderNotas()}
-                    </ul>
+                    </div>
                 </div>
             );
         }
