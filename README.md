@@ -9,9 +9,12 @@ Partes do projeto:
 * Modal com [React-Modal](https://github.com/reactjs/react-modal)
 
 ### TODO
-- [] Adicionar Todo
-- [] Arrumar UI
-- [] Fazer back
+- [x] Adicionar Todo
+- [ ] Editar Todo
+- [ ] Arrumar UI
+- [ ] Arrumar Login - [JWT](https://blog.rocketseat.com.br/reactjs-autenticacao/)
+- [ ] Fazer back
+- [ ] Fazer BD
 
 ### JSON-SERVER
 Abrir em outra porta
