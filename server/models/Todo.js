@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const todoSchema = new mongoose.Schema({
+const Todo = new mongoose.Schema({
     id: Number,
     userId: Number,
     createdAt: Date,
@@ -8,4 +8,4 @@ const todoSchema = new mongoose.Schema({
     finished: Boolean
 })
 
-module.exports = mongoose.model('Todo', todoSchema)
+module.exports = mongoose.model('Todo', Todo)

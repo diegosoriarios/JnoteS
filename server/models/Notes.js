@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const noteSchema = new mongoose.Schema({
+const Notes = new mongoose.Schema({
     id: Number,
     userId: Number,
     createdAt: Date,
@@ -8,4 +8,4 @@ const noteSchema = new mongoose.Schema({
     anexo: String,
 })
 
-module.exports = mongoose.model('Note', noteSchema)
+module.exports = mongoose.model('Note', Notes)

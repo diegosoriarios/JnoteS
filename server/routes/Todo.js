@@ -1,4 +1,4 @@
-const express = require('events')
+const express = require('express')
 const router = express.Router()
 
 const todoController = require('../controller/Todo')

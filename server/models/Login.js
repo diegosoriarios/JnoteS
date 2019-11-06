@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const loginSchema = new mongoose.Schema({
+const Login = new mongoose.Schema({
     id: Number,
     createdAt: Date,
     name: String,
@@ -8,4 +8,4 @@ const loginSchema = new mongoose.Schema({
     password: String
 })
 
-module.exports = mongoose.model('Login', loginSchema)
+module.exports = mongoose.model('Login', Login)
