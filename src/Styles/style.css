@@ -253,30 +253,17 @@ textarea {
         color: white;
     }
 
-    .navigator ul {
-        padding: 40%;
-        margin-left: 0;
-        list-style-type: none;
-        font-size: 1.5em;
+    .list-group {
+        display: inline-block;
+        width: 85% !important;
+        margin: 5%
     }
 
-    .selected {
-        background-color: #fff;
-        width: 200%;
-        color: #000;
+    .active {
+        background-color: white !important; 
+        color: black !important;
+        border: none;
     }
-
-    .selected a {
-        background-color: #fff;
-        width: 200%;
-        color: #000;
-    }
-
-    /*.navigator li {
-        border-top: 1px solid white;
-        border-bottom: 1px solid white;
-        text-align: center;
-    }*/
     
     .notes {
         list-style: none;

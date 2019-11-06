@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Home from './Pages/Home';
+import Todo from './Pages/Todo';
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, signUpUser } from './actions/items';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -34,12 +35,13 @@ class App extends Component {
         <Link 
           to="/" 
           onClick={dispatch => this.loginStatusClick(dispatch)}
+          className="list-group-item"
         >
           Logout
         </Link>
     }else{ 
       loginStatus = 
-        <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Login</Link>
+        <Link to="/" className="list-group-item" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Login</Link>
     }                                     
     return(
       <Router>
@@ -57,32 +59,42 @@ class App extends Component {
               <img src="https://api.adorable.io/avatars/400/abott@adorable.io.png" alt="avatar" className="avatar-img" />
               <h2>{ /*{'nome'} || */"Diego"}</h2>
             </div>
-            <ul>
-              <li className={location === '/' && this.props.logged ? 'selected' : ''} >
+            <div className="list-group">
+              <Link to="/"        className={`list-group-item ${location === '/' && this.props.logged ? 'active' : ''}`} onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>
+              <Link to="/about/"  className={`list-group-item ${location === '/about/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)}>About</Link>
+              <Link to="/todo/"   className={`list-group-item ${location === '/todo/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)}>To-do</Link>
+              <Link to="/users/"  className={`list-group-item ${location === '/users/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)} >Users</Link>
+              {loginStatus}
+              <Link to="/"        className={`list-group-item ${location === '/' && !this.props.logged && !this.props.sign ? 'active' : ''}`} onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(true)}}>Sign Up</Link>
+              {/*<li className={location === '/' && this.props.logged ? 'selected' : 'notSelected'} >
                 <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>
               </li>
-              <li className={location === '/about/' ? 'selected' : ''} >
+              <li className={location === '/about/' ? 'selected' : 'notSelected'} >
                 <Link to="/about/" onClick={() => this.props.isOpened(!this.props.opened)}>About</Link>
               </li>
-              <li className={location === '/users/' ? 'selected' : ''}>
-                <Link to="/users/" onClick={() => this.props.isOpened(!this.props.opened)}>Users</Link>
+              <li className={location === '/todo/' ? 'selected' : 'notSelected'}>
+                <Link to="/todo/" onClick={() => this.props.isOpened(!this.props.opened)}>To-do</Link>
               </li>
-              <li className={location === '/' && !this.props.logged && !this.props.sign ? 'selected' : ''}>
+              <li className={location === '/todo/' ? 'selected' : 'notSelected'}>
+                <Link to="/users/" onClick={() => this.props.isOpened(!this.props.opened)} >Users</Link>
+              </li>
+              <li className={location === '/' && !this.props.logged && !this.props.sign ? 'selected' : 'notSelected'}>
                 {loginStatus}
               </li>
               <li 
                 style={{display: !this.props.logged ? 'block' : 'none'}} 
-                className={location === '/' && this.props.sign ? 'selected' : ''}
+                className={location === '/' && this.props.sign ? 'selected' : 'notSelected'}
 
               >
                 <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(true)}}>Sign Up</Link>
-              </li>
-            </ul>
+            </li>*/}
+            </div>
           </nav>
         </CSSTransition>
           <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/users/" component={Users} />
+          <Route path="/todo/" component={Todo} />
           <Header />
         </div>
       </Router>

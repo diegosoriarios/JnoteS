@@ -6,6 +6,7 @@ export function userIsLogged(bool) {
 }
 
 export function navIsOpen(bool){
+    console.log(bool)
     return {
         type: 'ITS_OPEN',
         isOpen: bool

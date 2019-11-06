@@ -161,13 +161,19 @@ class Notes extends Component{
             return (
                 <div className="notes App">
                 <CSSTransition
-                    defaultStyle={{ transform: "translate(-101%, 0)" }}
-                    enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
-                    leaveStyle={{ transform: transit("translate(-101%, 0)", 500, "ease-in-out") }}
-                    activeStyle={{ transform: "translate(0, 0)" }}
-                    active={this.props.opened}
-                    className="navigator" style={{width: '50%'}}
+                    defaultStyle={{ transform: "scale(.7)"}}
+                    enterStyle={{ transform: transit("scale(1)", 200, "ease-in-out") }}
+                    leaveStyle={{ transform: transit("scale(0.7)", 500, "ease-in-out")}}
+                    activeStyle={{ transform: "scale(1)"}}
+                    active={!this.props.opened}
                 >
+                <CSSTransition
+                    defaultStyle={{ transform: "translate(90%, 0)"}}
+                    enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+                    leaveStyle={{ transform: transit("translate(90%, 0)", 500, "ease-in-out")}}
+                    activeStyle={{ transform: "translate(0, 0)"}}
+                    active={!this.props.opened}
+                >   
                     <div className="note-card">
                         <div className="toast-header">
                             <input type="color" />
@@ -194,7 +200,7 @@ class Notes extends Component{
                             {text}
                         </div>
                 </div>
-                </CSSTransition>
+                </CSSTransition></CSSTransition>
             </div>
             )
         }else{
