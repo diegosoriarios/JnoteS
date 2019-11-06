@@ -173,7 +173,7 @@ class Notes extends Component{
                     leaveStyle={{ transform: transit("translate(90%, 0)", 500, "ease-in-out")}}
                     activeStyle={{ transform: "translate(0, 0)"}}
                     active={!this.props.opened}
-                >   
+                >
                     <div className="note-card">
                         <div className="toast-header">
                             <input type="color" />
