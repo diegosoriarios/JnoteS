@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
 import Modal from 'react-modal';
 import { CSSTransition, transit } from 'react-css-transition'
+import { API_END } from '../actions/api'
 
 CSSTransition.childContextTypes = {
     // this can be empty
@@ -33,7 +34,7 @@ class Notes extends Component{
     }
 
     getNotes = () => {
-        /*axios.get(`${string.URL}/login/${this.props.id}/notes`)
+        axios.get(API_END + 'notes/get')
             .then(response => {
                 response.data.forEach((value) => {
                     this.setState({
@@ -43,13 +44,14 @@ class Notes extends Component{
             })
             .catch(function (error) {
                 console.log(error);
-            })*/
+            })
     }
 
     renderNotas = () => {
         return this.state.notas.map((value, i) => {
-            let date = value.createdAt.split('T');
-            date = date[0].split('-')
+            //let date = value.createdAt.split('T');
+            //date = date[0].split('-')
+            let date = value.createdAt
             return (
                 <div className="note-card" key={i} style={{zIndex: 1}}>
                     <div className="toast-header">
@@ -78,7 +80,7 @@ class Notes extends Component{
             this.updateNote()
         }else{
             let date = new Date();
-            axios.post(`${string.URL}/login/${this.props.id}/notes`, {
+            axios.post(API_END + 'notes/get', {
                 texto: this.state.text,
                 createdAt: date,
                 loginId: this.props.id
@@ -110,7 +112,7 @@ class Notes extends Component{
 
     updateNote = () => {
         let date = new Date()
-        axios.put(`${string.URL}/notes/${this.state.postId}`, {
+        axios.put(API_END + 'notes/get', {
             texto: this.state.text,
             createdAt: date,
             loginId: this.props.id
@@ -138,7 +140,7 @@ class Notes extends Component{
 
     deleteNote = () => {
         console.log(this.state.postId)
-        axios.delete(`${string.URL}/notes/${this.state.postId}`)
+        axios.delete(API_END + 'notes/get')
           .then(function (response) {
             console.log(response.data);
           })

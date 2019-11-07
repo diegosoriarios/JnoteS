@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-ro
 import './Styles/style.css';
 import Header from "./Components/Header";
 import { CSSTransition, transit } from 'react-css-transition'
-import axios from 'axios'
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Notes from './Pages/Notes';
@@ -52,7 +51,7 @@ class App extends Component {
     
     if(isAuthenticated){
       loginStatus = 
-        <Link to="/logout" onClick={() => auth_logout()} className="list-group-item">
+        <Link to="/logout" onClick={() => {auth_logout(); this.props.navIsOpen(false)}} className="list-group-item">
           Logout
         </Link>
     }else{ 
@@ -90,7 +89,7 @@ class App extends Component {
         </CSSTransition>
           <Switch>
             <Route path="/login">
-              <Login />
+              <Login router={Redirect} />
             </Route>
             <Route path="/signup">
               <SignUp />

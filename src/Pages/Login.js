@@ -3,6 +3,7 @@ import '../Styles/style.css';
 import { isAuthenticated, login } from '../actions/auth'
 import { API_END } from '../actions/api';
 import axios from 'axios'
+import { Link } from "react-router-dom";
 
 export default class Login extends Component {
     constructor(props){
@@ -22,7 +23,7 @@ export default class Login extends Component {
                 .then(response => login(response.access_token))
                 .catch(err => console.log(err))
         }
-    }    
+    }
 
     render(){
         return(
@@ -40,7 +41,7 @@ export default class Login extends Component {
                     value={this.state.password}
                     onChange={e => this.setState({password: e.target.value})}
                 /><br />
-                <button onClick={() => this.handlerClick()}>Login</button>
+                <Link to="/notes" onClick={() => this.handlerClick()}>Login</Link>
             </div>
         );
     }
