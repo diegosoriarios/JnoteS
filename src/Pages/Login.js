@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import '../Styles/style.css';
+import { isAuthenticated, login } from '../actions/auth'
+import { API_END } from '../actions/api';
+import axios from 'axios'
 
 export default class Login extends Component {
     constructor(props){
         super(props);
         this.state = {
-            username: '',
+            name: '',
             password: '',
         }
     }
 
     handlerClick = () => {
-        this.props.check(this.state.username, this.state.password);
-    }
+        let { name, password } = this.state
+        if (!isAuthenticated) {
+            let request = { name: name, password: password }
+            axios.post(API_END + 'login/login', request)
+                .then(response => response.data)
+                .then(response => login(response.access_token))
+                .catch(err => console.log(err))
+        }
+    }    
 
     render(){
         return(
@@ -20,9 +30,9 @@ export default class Login extends Component {
                 <h2>Login</h2>
                 <input
                     type="text"
-                    placeholder="username"
-                    value={this.state.username}
-                    onChange={e => this.setState({username: e.target.value})}
+                    placeholder="name"
+                    value={this.state.name}
+                    onChange={e => this.setState({name: e.target.value})}
                 /><br />
                 <input
                     type="password"

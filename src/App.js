@@ -3,46 +3,63 @@ import Home from './Pages/Home';
 import Todo from './Pages/Todo';
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, signUpUser } from './actions/items';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { isAuthenticated, logout as auth_logout } from './actions/auth'
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import './Styles/style.css';
 import Header from "./Components/Header";
 import { CSSTransition, transit } from 'react-css-transition'
+import axios from 'axios'
+import Login from "./Pages/Login";
+import SignUp from "./Pages/SignUp";
+import Notes from './Pages/Notes';
 
-const About = () => <h2>About</h2>;
-const Users = () => <h2>Users</h2>;
+function Logout() {
+  auth_logout()
+  return <Login />;
+}
 
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        isAuthenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 class App extends Component {
 
   componentDidMount() {
     document.body.style = "background: black"
   }
 
-  showNav = () => {
-    this.props.isOpened(!this.props.opened);
-  }
-
-  loginStatusClick = (dispatch) => {
-    localStorage.removeItem('logged');
-    this.props.isOpened(!this.props.opened)
-    dispatch(userIsLogged(false));
-  }
+  showNav = () => this.props.isOpened(!this.props.opened)
+  handleLoginStatus = () => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}
 
   render(){
     let location = window.location.pathname;
     let loginStatus;
-    if(this.props.logged){
+    
+    if(isAuthenticated){
       loginStatus = 
-        <Link 
-          to="/" 
-          onClick={dispatch => this.loginStatusClick(dispatch)}
-          className="list-group-item"
-        >
+        <Link to="/logout" onClick={() => auth_logout()} className="list-group-item">
           Logout
         </Link>
     }else{ 
       loginStatus = 
-        <Link to="/" className="list-group-item" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Login</Link>
+        <Link to="/login" className="list-group-item" onClick={() => this.handleLoginStatus()}>Login</Link>
     }                                     
+    
     return(
       <Router>
         <div>
@@ -60,41 +77,37 @@ class App extends Component {
               <h2>{ /*{'nome'} || */"Diego"}</h2>
             </div>
             <div className="list-group">
-              <Link to="/"        className={`list-group-item ${location === '/' && this.props.logged ? 'active' : ''}`} onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>
-              <Link to="/about/"  className={`list-group-item ${location === '/about/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)}>About</Link>
+              <Link to="/"        className={`list-group-item ${location === '/notes' && !isAuthenticated ? 'active' : ''}`} onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>
+              {//<Link to="/about/"  className={`list-group-item ${location === '/about/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)}>About</Link>
+    }
               <Link to="/todo/"   className={`list-group-item ${location === '/todo/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)}>To-do</Link>
-              <Link to="/users/"  className={`list-group-item ${location === '/users/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)} >Users</Link>
+              {//<Link to="/users/"  className={`list-group-item ${location === '/users/' ? 'active' : ''}`} onClick={() => this.props.isOpened(!this.props.opened)} >Users</Link>
+  }
               {loginStatus}
-              <Link to="/"        className={`list-group-item ${location === '/' && !this.props.logged && !this.props.sign ? 'active' : ''}`} onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(true)}}>Sign Up</Link>
-              {/*<li className={location === '/' && this.props.logged ? 'selected' : 'notSelected'} >
-                <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(false)}}>Home</Link>
-              </li>
-              <li className={location === '/about/' ? 'selected' : 'notSelected'} >
-                <Link to="/about/" onClick={() => this.props.isOpened(!this.props.opened)}>About</Link>
-              </li>
-              <li className={location === '/todo/' ? 'selected' : 'notSelected'}>
-                <Link to="/todo/" onClick={() => this.props.isOpened(!this.props.opened)}>To-do</Link>
-              </li>
-              <li className={location === '/todo/' ? 'selected' : 'notSelected'}>
-                <Link to="/users/" onClick={() => this.props.isOpened(!this.props.opened)} >Users</Link>
-              </li>
-              <li className={location === '/' && !this.props.logged && !this.props.sign ? 'selected' : 'notSelected'}>
-                {loginStatus}
-              </li>
-              <li 
-                style={{display: !this.props.logged ? 'block' : 'none'}} 
-                className={location === '/' && this.props.sign ? 'selected' : 'notSelected'}
-
-              >
-                <Link to="/" onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(true)}}>Sign Up</Link>
-            </li>*/}
+              <Link to="/"        className={`list-group-item ${location === '/signup' && !isAuthenticated && !this.props.sign ? 'active' : ''}`} onClick={() => {this.props.isOpened(!this.props.opened); this.props.signUp(true)}}>Sign Up</Link>
             </div>
           </nav>
         </CSSTransition>
-          <Route path="/" exact component={Home} />
-          <Route path="/about/" component={About} />
-          <Route path="/users/" component={Users} />
-          <Route path="/todo/" component={Todo} />
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+            <PrivateRoute path="/notes">
+              <Notes />
+            </PrivateRoute>
+            <PrivateRoute path="/">
+              <Notes />
+            </PrivateRoute>
+            <PrivateRoute path="/todo">
+              <Todo />
+            </PrivateRoute>
+            <Route path="/logout">
+              <Logout />
+            </Route>
+          </Switch>
           <Header />
         </div>
       </Router>

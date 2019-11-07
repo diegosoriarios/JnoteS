@@ -33,7 +33,7 @@ class Notes extends Component{
     }
 
     getNotes = () => {
-        axios.get(`${string.URL}/login/${this.props.id}/notes`)
+        /*axios.get(`${string.URL}/login/${this.props.id}/notes`)
             .then(response => {
                 response.data.forEach((value) => {
                     this.setState({
@@ -43,7 +43,7 @@ class Notes extends Component{
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            })*/
     }
 
     renderNotas = () => {

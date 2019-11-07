@@ -6,6 +6,8 @@ import string from '../String';
 import Login from './Login';
 import Notes from './Notes';
 import SignUp from './SignUp';
+import { isAuthenticated, login } from '../actions/auth'
+import { API_END } from '../actions/api';
 
 class Home extends Component{
     constructor(){
@@ -16,43 +18,19 @@ class Home extends Component{
         }
         this.checkLogin = this.checkLogin.bind(this);
     }
-    
-    componentDidMount = () => {
-        axios.get(`${string.URL}/login`)
-            .then(response => {
-                response.data.forEach((value) => {
-                    this.setState({
-                        user: this.state.user.concat(value),
-                    })
-                })
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        if(localStorage.getItem('logged') !== null){
-            this.props.isLogged(true);
-            this.setState({
-                id: JSON.parse(localStorage.getItem('logged'))
-            })
+
+    checkLogin = (name, password) => {
+        if (!isAuthenticated) {
+            let request = { name: name, password: password }
+            axios.post(API_END + 'login/login', request)
+                .then(response => response.data)
+                .then(response => login(response.access_token))
+                .catch(err => console.log(err))
         }
     }
 
-    checkLogin = (username, password) => {
-        this.state.user.forEach((value) => {
-            if(value.name === username){
-                if(value.password === password){
-                    this.setState({
-                        id: value.id
-                    })
-                    this.props.isLogged(true);
-                    localStorage.setItem('logged', JSON.stringify(value.id))
-                }
-            }
-        })
-    }
-
     render(){
-        if(!this.props.logged) {
+        if(!isAuthenticated) {
             if(this.props.sign){
                 return (
                     <div className="App">
