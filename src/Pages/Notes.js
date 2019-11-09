@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
-import string from '../String';
-import axios from 'axios';
+import React, { Component } from 'react'
+import string from '../String'
+import axios from 'axios'
 import '../Styles/Notes.css'
-import { connect } from 'react-redux';
-import { userIsLogged, navIsOpen, createNote } from '../actions/items';
-import Modal from 'react-modal';
+import { connect } from 'react-redux'
+import { userIsLogged, navIsOpen, createNote } from '../actions/items'
+import Modal from 'react-modal'
 import { CSSTransition, transit } from 'react-css-transition'
 import { API_END } from '../actions/api'
 
-CSSTransition.childContextTypes = {
-    // this can be empty
-}
+CSSTransition.childContextTypes = {}
 
 class Notes extends Component{
-    constructor(){
+    constructor() {
         super()
         this.state = {
             notas: [],
@@ -25,12 +23,17 @@ class Notes extends Component{
             title: 'Title',
             color: '#ffffff',
             createdAt: ''
-        };
+        }
     }
 
     componentDidMount = () => {
-        this.getNotes();
+        this.getNotes()
         Modal.setAppElement('#root')
+    }
+
+    refresh = () => {
+        this.props.createNote(false)
+        this.getNotes()
     }
 
     getNotes = () => {
@@ -42,36 +45,32 @@ class Notes extends Component{
                     })
                 })
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+            .catch(error => console.log(error))
     }
 
     renderNotas = () => {
         return this.state.notas.map((value, i) => {
-            //let date = value.createdAt.split('T');
+            //let date = value.createdAt.split('T')
             //date = date[0].split('-')
             let date = value.createdAt
             return (
                 <div className="note-card" key={i} style={{zIndex: 1}}>
                     <div className="toast-header">
                         <input type="color" />
-                        <div className="mr-auto">
-                                {value.title}
-                        </div>
+                        <div className="mr-auto">{value.title}</div>
                         <small>{date}</small>
                         <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.editNote(value)}>
                             <span aria-hidden="true">✎</span>
                         </button>
                         <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.handleModal(value)}>
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times</span>
                         </button>
                     </div>
                     <div className="toast-body">
                         {value.texto}
                     </div>
                 </div>
-            );
+            )
         })
     }
 
@@ -79,25 +78,19 @@ class Notes extends Component{
         if(this.state.edit){
             this.updateNote()
         }else{
-            let date = new Date();
+            let date = new Date()
             axios.post(API_END + 'notes/get', {
                 texto: this.state.text,
                 createdAt: date,
                 loginId: this.props.id
             })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
+            
             this.setState({
                 notas: [],
                 text: ''
-            }, () => {
-                this.props.createNote(false)
-                this.getNotes();
-            })
+            }, this.refresh())
         }
     }
 
@@ -107,7 +100,7 @@ class Notes extends Component{
             postId: i.id,
             edit: true
         })
-        this.props.createNote(true);
+        this.props.createNote(true)
     }
 
     updateNote = () => {
@@ -117,18 +110,11 @@ class Notes extends Component{
             createdAt: date,
             loginId: this.props.id
           })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+          .then(response => console.log(response))
+          .catch(error => console.log(error))
         this.setState({
             notas: []
-        }, () => {
-            this.props.createNote(false)
-            this.getNotes();
-        })
+        }, this.refresh())
     }
 
     handleModal = (i = '') => {
@@ -141,19 +127,12 @@ class Notes extends Component{
     deleteNote = () => {
         console.log(this.state.postId)
         axios.delete(API_END + 'notes/get')
-          .then(function (response) {
-            console.log(response.data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+          .then(response => console.log(response.data))
+          .catch(error => console.log(error))
         this.setState({
             notas: [],
             modal: false,
-        }, () => {
-            this.props.createNote(false)
-            this.getNotes();
-        })
+        }, this.refresh())
     }
 
     render(){
@@ -190,7 +169,7 @@ class Notes extends Component{
                                 <span aria-hidden="true">✎</span>
                             </button>
                             <button type="button" className="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onClick={() => this.handleModal('ok')}>
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times</span>
                             </button>
                         </div>
                         <div className="toast-body" 
@@ -238,7 +217,7 @@ class Notes extends Component{
                         </CSSTransition>
                     </CSSTransition>
                 </div>
-            );
+            )
         }
     }
 }
@@ -248,8 +227,8 @@ const mapStateToProps = (state) => {
         logged: state.userIsLogged,
         opened: state.navIsOpen,
         openEditor: state.createNote
-    };
-  };
+    }
+  }
   
   const mapDispatchToProps = (dispatch) => {
     return {
@@ -259,4 +238,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Notes);
+  export default connect(mapStateToProps, mapDispatchToProps)(Notes)
