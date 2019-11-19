@@ -4,13 +4,15 @@ import "../Styles/Todo.css"
 import { CSSTransition, transit } from 'react-css-transition'
 import { connect } from 'react-redux';
 import { userIsLogged, navIsOpen, createNote } from '../actions/items';
+import Modal from 'react-modal'
 
 class Todo extends Component {
     state = {
         list: [
             {text: 'Terminar esse projeto', data: '6-11-2019', finished: false},
         ],
-        day: ''
+        day: '',
+        showModal: false
     }
 
     done = index => {
@@ -55,36 +57,50 @@ class Todo extends Component {
     }
 
     render() {
-        return(
-            <div className="App">
-                <CSSTransition
-                    defaultStyle={{ transform: "scale(.7)"}}
-                    enterStyle={{ transform: transit("scale(1)", 200, "ease-in-out") }}
-                    leaveStyle={{ transform: transit("scale(0.7)", 500, "ease-in-out")}}
-                    activeStyle={{ transform: "scale(1)"}}
-                    active={!this.props.opened}
+        if (this.state.showModal) {
+            return (
+                <Modal
+                    isOpen={this.state.modal}
+                    onRequestClose={this.closeModal}
+                    contentLabel="Example Modal"
+                    className="modal"
                 >
-                <CSSTransition
-                    defaultStyle={{ transform: "translate(90%, 0)"}}
-                    enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
-                    leaveStyle={{ transform: transit("translate(90%, 0)", 500, "ease-in-out")}}
-                    activeStyle={{ transform: "translate(0, 0)"}}
-                    active={!this.props.opened}
-                >
-                <div>
-                
-                    <DatePicker filterList={this.filterList} />
-                
-                    <div className="currentList list-group">
-                        {this.renderList()}
-                    </div>
+                    <input type="text" />
+                </Modal>
+            )
+        } else {
+            return(
+                <div className="App">
+                    <CSSTransition
+                        defaultStyle={{ transform: "scale(.7)"}}
+                        enterStyle={{ transform: transit("scale(1)", 200, "ease-in-out") }}
+                        leaveStyle={{ transform: transit("scale(0.7)", 500, "ease-in-out")}}
+                        activeStyle={{ transform: "scale(1)"}}
+                        active={!this.props.opened}
+                    >
+                    <CSSTransition
+                        defaultStyle={{ transform: "translate(90%, 0)"}}
+                        enterStyle={{ transform: transit("translate(0, 0)", 500, "ease-in-out") }}
+                        leaveStyle={{ transform: transit("translate(90%, 0)", 500, "ease-in-out")}}
+                        activeStyle={{ transform: "translate(0, 0)"}}
+                        active={!this.props.opened}
+                    >
+                    <div>
+                    
+                        <DatePicker filterList={this.filterList} />
+                    
+                        <div className="currentList list-group">
+                            {this.renderList()}
+                        </div>
 
-                    <div className="xyz">
-                        <button type="button" className="btn btn-dark btn-circle btn-xl">+</button> 
-                    </div>
-                </div></CSSTransition></CSSTransition>
-            </div>
-        )
+                        <div className="xyz">
+                            <button type="button" className="btn btn-dark btn-circle btn-xl">+</button> 
+                            <button type="button" className="btn btn-primary btn-circle btn-xl">Edit</button>
+                        </div>
+                    </div></CSSTransition></CSSTransition>
+                </div>
+            )
+        }
     }
 }
 

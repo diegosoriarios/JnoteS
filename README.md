@@ -13,8 +13,11 @@ Partes do projeto:
 - [ ] Editar Todo
 - [ ] Arrumar UI
 - [ ] Arrumar Login - [JWT](https://blog.rocketseat.com.br/reactjs-autenticacao/)
-- [ ] Fazer back
-- [ ] Fazer BD
+- [x] Fazer back
+- [x] Fazer BD
+- [ ] Offline
+- [ ] PWA
+- [ ] Notification
 
 ### JSON-SERVER
 Abrir em outra porta
